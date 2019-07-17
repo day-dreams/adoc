@@ -122,15 +122,22 @@ func (api *Api) ToReadme() string {
 
 	rv := ""
 
-	rv += fmt.Sprintf("* %s\n", api.name)
-	rv += fmt.Sprintf("	* 请求URL %s\n", api.path)
-	rv += fmt.Sprintf("	* 请求方法 %s\n", api.method)
-	rv += fmt.Sprintf("	* 请求参数\n")
-	for _, param := range api.params {
-		rv += fmt.Sprintf("		* %s\n", param.String())
-	}
+	rv += fmt.Sprintf("## %s\n", api.name)
+	rv += fmt.Sprintf("* 请求URL: %s\n", api.path)
+	rv += fmt.Sprintf("* 请求方法: %s\n", api.method)
+	rv += fmt.Sprintf("* 请求参数:\n\n")
 
-	rv += fmt.Sprintf("	* 返回数据示例 \n\n")
+	rv += fmt.Sprintf("|参数名|是否必选|参数类型|取值范围|说明|\n")
+	rv += fmt.Sprintf("|:-:|-|-|-|-|\n")
+
+	for _, param := range api.params {
+		//rv += fmt.Sprintf("		* %s\n", param.String())
+		rv += fmt.Sprintf("|%s|%s|%s|%s|%s|\n",
+			param.name, param.required, param.t, param.scope, param.desc)
+	}
+	rv += fmt.Sprintf("\n")
+
+	rv += fmt.Sprintf("* 返回数据示例: \n\n")
 	rv += fmt.Sprintf("```json\n")
 	rv += fmt.Sprintf("%s\n", api.rdata)
 	rv += fmt.Sprintf("```\n")
