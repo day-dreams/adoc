@@ -1,8 +1,8 @@
 all: build
 
 build:
-        go build -o adoc .
+	go build -o adoc .
 install:
-        cp adoc /usr/local/bin
+	cp adoc /usr/local/bin
 clean:
-        rm adoc /usr/local/bin/adoc
+	rm adoc /usr/local/bin/adoc
