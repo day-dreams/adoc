@@ -48,7 +48,7 @@ func IsApiName(text string) (ok bool, name string) {
 	if err != nil {
 		return false, ""
 	}
-	return true, block
+	return true, strings.TrimPrefix(block, " ")
 }
 
 // IsApiPath 判断text是否是api注释的请求路径，如果是，返回该path
@@ -58,7 +58,7 @@ func IsApiPath(text string) (ok bool, path string) {
 	if err != nil {
 		return false, ""
 	}
-	return true, block
+	return true, strings.TrimPrefix(block, " ")
 }
 
 // IsApiParam 判断text是否是api注释的请求参数，如果是，返回该param
@@ -68,6 +68,7 @@ func IsApiParam(text string) (ok bool, param ApiParam) {
 	if err != nil {
 		return false, ApiParam{}
 	}
+	block = strings.TrimPrefix(block, " ")
 	return true, NewApiParam(block)
 }
 
@@ -78,7 +79,7 @@ func IsApiMethod(text string) (ok bool, method string) {
 	if err != nil {
 		return false, ""
 	}
-	return true, block
+	return true, strings.TrimPrefix(block, " ")
 }
 
 // IsApiDesc 判断text是否是api注释的返回实例数据，如果是，返回该示例数据
@@ -88,7 +89,7 @@ func IsApiReturn(text string) (ok bool, rdata string) {
 	if err != nil {
 		return false, ""
 	}
-	return true, block
+	return true, strings.TrimPrefix(block, " ")
 }
 
 func splitByReg(pattern string, text string) (string, error) {
@@ -111,7 +112,7 @@ func (api *Api) ToReadme() string {
 
 	rv := ""
 
-	rv += fmt.Sprintf("## %s\n", api.Name)
+	rv += fmt.Sprintf("## %s\n\n", api.Name)
 	rv += fmt.Sprintf("* 请求URL: %s\n", api.Path)
 	rv += fmt.Sprintf("* 请求方法: %s\n", api.Method)
 	rv += fmt.Sprintf("* 请求参数:\n\n")

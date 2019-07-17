@@ -35,8 +35,14 @@ func main() {
 	}
 
 	for _, api := range apis {
+		fmt.Printf("- [%s](##%s)\n", api.Name, api.Name)
+	}
+
+	fmt.Printf("\n\n")
+	for _, api := range apis {
 		readme := api.ToReadme()
 		fmt.Println(readme)
+
 	}
 
 }
